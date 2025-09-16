@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.pyenv/
+.micromamba/
+
+# Conda environments
+*.conda
+*.lock
+
+# Jupyter
+.ipynb_checkpoints/
+.notebooks_cache/
+runs/
+
+# Data artifacts
+/data/raw/
+/data/interim/
+/data/external/
+*.h5
+*.tfrecord
+*.zip
+*.tar
+*.tar.gz
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+
+# Logs and coverage
+*.log
+.coverage
+coverage.xml
+pytest_cache/
+.mypy_cache/
+
+# Credentials / env files
+.env
+.env.*
+*.key
+*.pem
+
+# TensorBoard
+*.tfevents*
