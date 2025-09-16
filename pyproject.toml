@@ -1,0 +1,35 @@
+[project]
+name = "deep-learning-course-2025"
+version = "0.1.0"
+description = "AAST Deep Learning Course 2025 – notebooks, utilities, and teaching assets"
+requires-python = ">=3.11"
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+exclude = ["notebooks/**", ".ipynb_checkpoints/**", "old content/**"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.nbqa.config]
+addopts = ["--nbqa-mutate"]
+
+[tool.nbqa.black]
+addopts = ["--line-length=100"]
+
+[tool.nbqa.ruff]
+addopts = ["--fix"]
+
+[tool.jupytext]
+formats = "ipynb,py:percent"
+notebook_metadata_filter = "all"
+cell_metadata_filter = "all"
