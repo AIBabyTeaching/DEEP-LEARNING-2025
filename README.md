@@ -67,26 +67,6 @@ scripts/      # automation helpers such as new_week.py
 - **W13** Responsible AI; evaluation, bias, robustness, reproducibility
 - **W14** Capstone project template & rubric
 
-## How to Add a New Week
-Use the helper script to scaffold a new notebook pair from the template:
-```bash
-python scripts/new_week.py W15_topic_name
-```
-This copies `templates/notebook_template.py` into `notebooks/W15_topic_name.py`, attempts to generate the paired `.ipynb` via jupytext, and prints follow-up instructions if jupytext is unavailable. After opening the notebook in JupyterLab, update the title, objectives, and exercise prompts.
-
-## Contributing
-- Install the pre-commit hooks once per machine:
-  ```bash
-  pre-commit install
-  ```
-- Format Python and notebook sources before committing:
-  ```bash
-  black .
-  ruff check .
-  nbqa black notebooks/
-  nbqa ruff notebooks/
-  ```
-- Commit clean notebooks: hooks run nbstripout/nbQA to keep diffs lightweight.
 
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
