@@ -1,0 +1,53 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\title{Lab 1 Guide: Deep Learning Foundations}
+\author{Course Staff}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section*{Objectives}
+\begin{itemize}[leftmargin=*]
+    \item Internalize how tensors, automatic differentiation, and mean squared error interlock to drive gradient-based learning~\cite{goodfellow2016deep,geron2022hands}.
+    \item Translate analytic gradient derivations into NumPy and TensorFlow implementations that mirror the notebook demos.
+    \item Practice reading optimizer diagnostics in TensorBoard to inform simple model design decisions.
+\end{itemize}
+
+\section*{Key Ideas}
+\begin{itemize}[leftmargin=*]
+    \item Tensors generalize scalars, vectors, and matrices so neural networks can manipulate structured data efficiently~\cite{goodfellow2016deep}.
+    \item Automatic differentiation exposes gradients of composite computations without hand-derived calculus at every step~\cite{geron2022hands}.
+    \item Mean squared error provides a smooth objective whose gradients connect the linear model warm-up to multilayer perceptrons.
+\end{itemize}
+
+\section*{Workflow}
+\begin{enumerate}[leftmargin=*]
+    \item Review the math recap linking MSE gradients to linear regression, then run the NumPy line-fit cell to see the closed-form solution in action.
+    \item Step through the GradientTape mini-demo to observe how TensorFlow records operations and surfaces parameter updates automatically.
+    \item Load Fashion-MNIST with the helper utilities, documenting each preprocessing stage (normalization, flattening, batching) as in the notebook comments.
+    \item Train the baseline dense network, monitor early stopping and TensorBoard callbacks, and interpret the plotted history against your expectations from the math section.
+\end{enumerate}
+
+\section*{Assignments and Exit Ticket}
+\begin{itemize}[leftmargin=*]
+    \item Derive the gradients for $w$ and $b$ under MSE and compare with the notebook's analytical expressions.
+    \item Run the hidden-size and optimizer comparisons, noting how the accuracy curves shift and how TensorBoard visualizes the differences.
+    \item Exit Ticket: Submit a brief reflection connecting one GradientTape observation to the gradient narratives in Goodfellow et~al.~(2016) or Géron (2022).
+\end{itemize}
+
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+\bibitem{goodfellow2016deep}
+Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+\newblock \emph{Deep Learning}.
+\newblock MIT Press, 2016.
+
+\bibitem{geron2022hands}
+Aur\'elien G\'eron.
+\newblock \emph{Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow}.
+\newblock O'Reilly Media, 3rd edition, 2022.
+\end{thebibliography}
+
+\end{document}
