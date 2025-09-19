@@ -6,9 +6,8 @@ This repository hosts the 14-week AAST Deep Learning Course for 2025, built arou
 Students work primarily on CPUs by default with the option to extend to NVIDIA GPU acceleration. Reproducible conda environments, pre-configured linting, and notebook hygiene checks keep collaboration smooth across Windows, macOS, and Linux.
 
 ## Authors
-> **Course Lead:** AAST Machine Intelligence Faculty  \\
-> **Maintainers:** Deep Learning Course 2025 Teaching Team  \\
-> **Contact:** dl-course@aast.edu
+> **Course Lead:** Eng. Ahmed Métwalli (Assistant Lecturer)\\
+> **Contact:** ametwalli@aast.edu
 
 ### Author
 
