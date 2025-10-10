@@ -30,3 +30,5 @@ dependencies:
     - pre-commit>=3.7
     - pydot>=2.0
     - tqdm>=4.66
+    - opencv-python
+    - pillow
