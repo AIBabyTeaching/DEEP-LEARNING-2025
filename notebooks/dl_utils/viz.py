@@ -12,8 +12,26 @@ from keras.utils import plot_model
 HistoryLike = tf.keras.callbacks.History | dict[str, list[float]]
 
 
-def plot_history(history: HistoryLike, *, metrics: Iterable[str] | None = None) -> None:
-    """Plot training and validation metrics from a History object."""
+def plot_history(
+    history: HistoryLike,
+    *,
+    metrics: Iterable[str] | None = None,
+    title: str | None = None,
+) -> None:
+    """Plot training and validation metrics from a History object.
+
+    Parameters
+    ----------
+    history:
+        The training history returned by ``Model.fit`` or a mapping of metrics.
+    metrics:
+        Iterable of metric names to visualize. When ``None`` all metrics present in
+        the history are plotted.
+    title:
+        Optional string used as the title template for each plot. When provided the
+        ``metric`` name is injected via ``str.format`` using the ``metric`` keyword
+        (e.g. ``"My experiment - {metric}"``).
+    """
 
     if isinstance(history, tf.keras.callbacks.History):
         history_data = history.history
@@ -40,7 +58,11 @@ def plot_history(history: HistoryLike, *, metrics: Iterable[str] | None = None) 
             plt.plot(epochs, val_values, label=f"Val {metric}")
         plt.xlabel("Epoch")
         plt.ylabel(metric)
-        plt.title(f"Training history: {metric}")
+        if title is not None:
+            plot_title = title.format(metric=metric)
+        else:
+            plot_title = f"Training history: {metric}"
+        plt.title(plot_title)
         plt.legend()
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
