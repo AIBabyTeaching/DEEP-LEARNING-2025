@@ -45,19 +45,50 @@ def download_kaggle_competition(
     target_path = _ensure_directory(Path(target_dir))
     archive_path = target_path / f"{name}.zip"
 
-    if force and archive_path.exists():
-        archive_path.unlink()
-
-    if not archive_path.exists():
+    def _download_archive() -> None:
         from kaggle.api.kaggle_api_extended import KaggleApi
 
         api = KaggleApi()
         api.authenticate()
         api.competition_download_files(name, path=target_path, quiet=False)
 
+    if force and archive_path.exists():
+        archive_path.unlink()
+
+    if not archive_path.exists():
+        _download_archive()
+
     if unzip and archive_path.exists():
-        with zipfile.ZipFile(archive_path) as zf:
-            zf.extractall(target_path)
+
+        def _extract_archive() -> None:
+            if not zipfile.is_zipfile(archive_path):
+                raise zipfile.BadZipFile(f"Downloaded file {archive_path} is not a valid ZIP archive")
+            with zipfile.ZipFile(archive_path) as zf:
+                zf.extractall(target_path)
+
+        try:
+            _extract_archive()
+        except zipfile.BadZipFile as exc:
+            # The Kaggle CLI occasionally writes HTML error responses to disk when authentication
+            # fails or the download is interrupted. Retry once with a fresh download to avoid
+            # leaving the user with a confusing ``BadZipFile`` error.
+            archive_path.unlink(missing_ok=True)
+
+            if force:
+                raise RuntimeError(
+                    "The downloaded competition archive appears to be corrupted even with "
+                    "`force=True`. Remove the archive manually and verify Kaggle credentials."
+                ) from exc
+
+            _download_archive()
+            try:
+                _extract_archive()
+            except zipfile.BadZipFile as exc2:
+                raise RuntimeError(
+                    "Failed to extract Kaggle competition files because the downloaded archive "
+                    "is not a valid ZIP file. Try deleting the archive and downloading again "
+                    "after verifying Kaggle API access."
+                ) from exc2
 
     return target_path
 
