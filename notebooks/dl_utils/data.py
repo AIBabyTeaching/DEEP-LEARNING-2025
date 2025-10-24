@@ -2,11 +2,64 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from collections.abc import Callable
 from typing import Any
 
 import tensorflow as tf
 import tensorflow_datasets as tfds
+import zipfile
+
+
+def _ensure_directory(path: Path) -> Path:
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def download_kaggle_competition(
+    name: str,
+    *,
+    target_dir: str | Path,
+    force: bool = False,
+    unzip: bool = True,
+) -> Path:
+    """Download competition files from Kaggle using the authenticated API.
+
+    Parameters
+    ----------
+    name:
+        Slug of the Kaggle competition, e.g. ``"dogs-vs-cats"``.
+    target_dir:
+        Destination directory where archives will be stored.
+    force:
+        When ``True`` an existing archive will be replaced by a fresh download.
+    unzip:
+        If enabled, extract the downloaded ``.zip`` file into ``target_dir``.
+
+    Returns
+    -------
+    pathlib.Path
+        Path to the directory that contains the downloaded files.
+    """
+
+    target_path = _ensure_directory(Path(target_dir))
+    archive_path = target_path / f"{name}.zip"
+
+    if force and archive_path.exists():
+        archive_path.unlink()
+
+    if not archive_path.exists():
+        from kaggle.api.kaggle_api_extended import KaggleApi
+
+        api = KaggleApi()
+        api.authenticate()
+        api.competition_download_files(name, path=target_path, quiet=False)
+
+    if unzip and archive_path.exists():
+        with zipfile.ZipFile(archive_path) as zf:
+            zf.extractall(target_path)
+
+    return target_path
 
 
 def load_tfds_dataset(
