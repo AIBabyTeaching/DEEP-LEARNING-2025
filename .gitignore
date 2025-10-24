@@ -35,6 +35,7 @@ runs/
 *.zip
 *.tar
 *.tar.gz
+data/dogs-vs-cats/
 
 # Editors and OS
 .DS_Store
